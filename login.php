@@ -12,7 +12,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
    $senha = $_POST ['senha'];
    
    #QUERY DE BANCO DE DADOS
-   $sql = "SELECT COUNT(usu_id) FROM usuarios WHERE usu_nome = '$nome' AND usu_senha = '$senha' ";
+   $sql = "SELECT COUNT(usu_id) FROM usuarios WHERE usu_nome = '$nome' AND usu_senha = '$senha' AND usu_ativo = 's' ";
    $retorno = mysqli_query($link, $sql);
 
    #TODO RETORNO DO BANCO É RETORNADO EM ARRAY EM PHP
@@ -30,6 +30,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
     $sql = "SELECT * FROM usuarios WHERE usu_nome = 'nome' AND usu_senha = '$senha' AND usu_ativo = 's'";
 
     echo"<script>window.location.href='admhome.php';</script>";
+    $_SESSION['nomeusuario'] = $nome;
    }
    else
    {
@@ -43,7 +44,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST')
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">]
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/estiloadm.css">
     <title>LOGIN USUARIO</title>
 </head>

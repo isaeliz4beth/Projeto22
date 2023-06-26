@@ -2,8 +2,7 @@
 
 session_start();
 
-$nomeusuario = $_SESSION['nomeusuario'];
-
+$nomeusuario = $_SESSION["nomeusuario"];
 ?>
 
 
@@ -19,7 +18,7 @@ $nomeusuario = $_SESSION['nomeusuario'];
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <lin rel="stylesheet" href="./css/estiloadm.css">
+    <link rel="stylesheet" href="./css/estiloadm.css">
 
     <title>MENU ADMINISTRATIVO</title>
 
@@ -46,36 +45,34 @@ $nomeusuario = $_SESSION['nomeusuario'];
             <?php
 
             #ABERTO O PHP PARA VALIDAR SE A SESSÃO DO USUARIO ESTÁ ABERTA
-
+            
             #SE SESSÃO ABERTA, FECHA O PHP PARA USAR ELEMENTOS HTML
-
-            if($nomeusuario != null){
+            
+            if ($nomeusuario != null) {
 
                 ?>
 
                 <!-- USO DO ELEMENTO HTML COM PHP INTERNO -->
 
-                <li class="profile">OLÁ <?=strtoupper($nomeusuario)?></li>
+                <li class="profile">OLÁ
+                    <?= strtoupper($nomeusuario) ?>
+                </li>
 
                 <?php
 
                 #ABERTURA DE OUTRO PHP PARA CASO FALSE
+            
 
-           
 
-            }
+            } else {
 
-            else{
-
-                echo"<script>window.alert('USUARIO NÃO AUTENTICADO');
-
-                indow.location.href='login.php';</script>";
+                echo "<script>window.alert('USUARIO NÃO AUTENTICADO');window.location.href='login.php';</script>";
 
             }
 
             #FIM DO PHP PARA CONTINUAR MEU HTML
-
-                ?>
+            
+            ?>
 
 
 
@@ -85,7 +82,7 @@ $nomeusuario = $_SESSION['nomeusuario'];
 
     </div>
 
-   
+
 
 </body>
 
