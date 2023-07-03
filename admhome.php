@@ -34,7 +34,7 @@ $nomeusuario = $_SESSION["nomeusuario"];
 
             <li> <a href="listausuario.php">LISTA USUARIO</a></li>
 
-            <li> <a href="cadastrproduto.php">CADASTRA PRODUTO</a></li>
+            <li> <a href="cadastraproduto.php">CADASTRA PRODUTO</a></li>
 
             <li> <a href="listaproduto.php">LISTA PRODUTO</a></li>
 
