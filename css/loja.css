@@ -1,6 +1,6 @@
 /* HEADER */
 header {
-    background-color:  hwb(352 2% 74%);
+    background-color:  hwb(295 0% 87%);
     padding: 10px;
     border-radius: 3px;
 
@@ -81,13 +81,13 @@ header {
   }
   
   .card .price {
-    color: rgb(87, 6, 26);
+    color: rgb(87, 6, 80);
     font-size: 22px;
   }
   
   .card .botao {
     outline: 0;
-    color: rgb(99, 4, 43);
+    color: rgb(100, 5, 45);
     border: 0px;
     background-color: #f7e4f7;
     text-align: center;
