@@ -13,13 +13,11 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     $preco = $_POST['preco'];
 
     // THE WITCH IS COMING....
-
     if(isset($_FILES['imagem']) && $_FILES['imagem']['error']=== UPLOAD_ERR_OK){
         $imagem_temp = $_FILES['imagem']['tmp_name'];
         $imagem = file_get_contents($imagem_temp);
         $imagem_base64 = base64_encode($imagem);
     };
-
     // FIM BRUXARIA
 
     // QUERY DO BANCO
