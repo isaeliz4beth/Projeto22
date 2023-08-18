@@ -18,6 +18,7 @@ $retorno = mysqli_query($link, $sql);
 </head>
 
 <body>
+    
     <!-- MENU DA LOJA -->
     <header>
         <nav>

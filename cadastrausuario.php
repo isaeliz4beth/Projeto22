@@ -55,8 +55,6 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
             <br>
             <input type="password" name="senha" id="senha"placeholder="SENHA">
             <br>
-            <input type="text" name="nome" id="nome" placeholder="NOME USUARIO">
-            <br>
             <input type="submit" name="cadastrar" id="cadastrar" value="CADASTRAR">
             
         </form>
