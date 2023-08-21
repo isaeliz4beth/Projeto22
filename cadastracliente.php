@@ -1,104 +1,103 @@
 <?php
+#cli_id	
+#cli_cpf	
+#cli_nome	
+#cli_senha	
+#cli_datanasc	
+#cli_telefone	
+#cli_logradouro	
+#cli_numero	
+#cli_cidade	
+#cli_ativo
+
+
+
 include("conectadb.php");
 
-session_start();
-$nomeusuario = $_SESSION["nomeusuario"];
+if($_SERVER['REQUEST_METHOD'] == 'POST')
+{
+    $cpf = $_POST['cpf'];
+    $nome = $_POST['nome'];
+    $senha = $_POST['senha'];
+    $datanasc = $_POST['datanasc'];
+    $telefone = $_POST['telefone'];
+    $logradouro = $_POST['logradouro'];
+    $numero = $_POST['numero'];
+    $cidade = $_POST['cidade'];
 
-#JÁ LISTA OS USUARIOS DO MEU BANCO
-$sql = "SELECT * FROM clientes WHERE cli_ativo = 's'";
-$retorno = mysqli_query($link, $sql);
 
-#JÁ FORÇA TRAZER s NA VARIÁVEL ATIVO
-$ativo = 's';
 
-#COLETA O BOTÃO DE POST
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $ativo = $_POST['ativo'];
+    #VALIDAÇÃO DE USUARIO. VERIFICA DE USUARIO JÁ EXISTE
+    $sql = "SELECT COUNT(cli_cpf) FROM clientes WHERE cli_cpf = '$cpf'";
+    $retorno = mysqli_query($link, $sql);
 
-    #VERIFICA SE USUARIO ESTÁ ATIVO PARA LISTAR
-    if ($ativo == 's') {
-        $sql = "SELECT * FROM clientes WHERE cli_ativo = 's' ";
-        $retorno = mysqli_query($link, $sql);
-    } else {
-        $sql = "SELECT * FROM clientes WHERE cli_ativo = 'n' ";
-        $retorno = mysqli_query($link, $sql);
+    while ($tbl = mysqli_fetch_array($retorno))
+    {
+        $cont = $tbl[0];
+    }
+
+    #VALIDAÇÃO DE TRUE E FALSE
+    if($cont == 1)
+    {
+        echo"<script>window.alert('CLIENTE JÁ EXISTE');</script>";
+    }
+    else
+    {
+        $sql = "INSERT INTO clientes (cli_cpf, cli_nome, cli_senha, cli_datanasc, cli_telefone, cli_logradouro, cli_numero, cli_cidade, cli_ativo) VALUES('$cpf','$nome','$senha','$datanasc','$telefone','$logradouro','$numero','$cidade','s')"; # 'n' representa usuario não ativo
+                                                                                                        # posso colocar 's' para usuario ativo
+        mysqli_query($link, $sql);
+        #cadastra cliente e joga mensagem na tela e direciona para lista usuario
+        echo"<script>window.alert('CLIENTE CADASTRADO');</script>";
+        echo"<script>window.location.href='listacliente.php';</script>";
+
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
 
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/estiloadm.css">
-    <title>LISTA clientes</title>
+    <title>CADASTRO DE CLIENTE</title>
 </head>
-
 <body>
     <div>
         <ul class="menu">
             <li><a href="cadastrausuario.php">CADASTRA USUARIO</a></li>
-            <li><a href="listausuario.php">LISTA USUARIO</a></li>
-            <li><a href="cadastraproduto.php">CADASTRA PRODUTO</a></li>
-            <li><a href="listaproduto.php">LISTA PRODUTO</a></li>
-            <li><a href="listacliente.php">LISTA CLIENTE</a></li>
             <li><a href="cadastracliente.php">CADASTRA CLIENTE</a></li>
+            <li><a href="listausuario.php">LISTA USUARIO</a></li>
+            <li><a href="cadastraproduto.php">CADASTRA PRODUTOS</a></li>
+            <li><a href="listaproduto.php">LISTA PRODUTOS</a></li>
+            <li><a href="listacliente.php">LISTA CLIENTE</a></li>
             <li class="menuloja"><a href="./areacliente/loja.php">LOJA</a></li>
-            <?php
-            #ABERTO O PHP PARA VALIDAR SE A SESSÃO DO USUARIO ESTÁ ABERTA
-            #SE SESSÃO ABERTA, FECHA O PHP PARA USAR ELEMENTOS HTML
-            if ($nomeusuario != null) {
-            ?>
-                <!-- USO DO ELEMENTO HTML COM PHP INTERNO -->
-                <li class="profile">OLÁ <?= strtoupper($nomeusuario) ?></li>
-            <?php
-                #ABERTURA DE OUTRO PHP PARA CASO FALSE
-            } else {
-                echo "<script>window.alert('USUARIO NÃO AUTENTICADO');
-                        window.location.href='login.php';</script>";
-            }
-            #FIM DO PHP PARA CONTINUAR MEU HTML
-            ?>
-        </ul>
+        </ul>  
     </div>
 
-    <!-- AQUI LISTA OS USUARIOS DO BANCO  -->
-    <div id="background">
-        <form action="listausuario.php" method="post">
-            <input type="radio" name="ativo" class="radio" value="s" required 
-            onclick="submit()" <?=$ativo =='s'?"checked":""?>>ATIVOS
+    <div>
+        <form action="cadastracliente.php" method="post">
 
-            <input type="radio" name="ativo" class="radio" value="n" required 
-            onclick="submit()" <?=$ativo =='n'?"checked":""?>>INATIVOS
+            <input type="number" name="cpf" id="cpf" placeholder="CPF">
+            <br>
+            <input type="text" name="nome" id="nome" placeholder="NOME">
+            <br>
+            <input type="password" name="senha" id="senha" placeholder="SENHA">
+            <br>
+            <input type="date" name="datanasc" id="datanasc" placeholder="DATA NACIMENTO">
+            <br>
+            <input type="number" name="telefone" id="telefone" placeholder="TELEFONE">
+            <br>
+            <input type="text" name="logradouro" id="logradouro" placeholder="LOGRADOURO">
+            <br>
+            <input type="text" name="numero" id="numero" placeholder="NUMERO">
+            <br>
+            <input type="text" name="cidade" id="cidade" placeholder="CIDADE">
+            <br>
+            <input type="submit" name="cadastrar" id="cadastrar" value="CADASTRAR">
+
         </form>
-
-        <div class="container">
-            <table border="1">
-                <tr>
-                    <th>NOME</th>
-                    <th>ALTERAR DADOS</th>
-                    <th>ATIVO?</th>
-                </tr>
-                <!-- BRUXARIA EM PHP -->
-                <?php
-                    while($tbl = mysqli_fetch_array($retorno))
-                    {
-                ?>
-                    <tr>
-                        <td><?= $tbl[1]?></td> <!-- TRAZ SOMENTE A COLUNA 1 DO BANCO [NOME]-->
-                        <td><a href="alterausuario.php?id=<?= $tbl[0]?>">
-                        <input type="button" value="ALTERAR DADOS"></a></td> <!-- CRIANDO UM BOTÃO ALTERAR PASSANDO O ID DO USUARIO NA URL VIA GET -->
-                        <td><?=$check =($tbl[3] == 's')?"SIM":"NÃO"?></td> <!-- VALIDA S OU N E ESCREVE "SIM" E "NÃO"-->
-                    </tr>
-                    <?php
-                    }
-                    ?>
-            </table>
-        </div>
-
     </div>
 
 </body>
-
 </html>
